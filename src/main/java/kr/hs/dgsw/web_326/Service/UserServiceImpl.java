@@ -20,6 +20,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User login(String email, String password) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(password)) return user.get();
+        }
+        return null;
+    }
+
+    @Override
     public User update(Long id, User user) {
         return userRepository.findById(id)
                 .map(found -> {

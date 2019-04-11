@@ -15,6 +15,10 @@ public class UserController {
     public User add(@RequestBody User user) {
         return userService.add(user);
     }
+    @PostMapping("/user/login")
+    public User login(@RequestBody User user) {
+        return userService.login(user.getEmail(), user.getPassword());
+    }
     @PutMapping("/user/update/{id}")
     public User update(@PathVariable Long id, @RequestBody User user) {
         return userService.update(id, user);

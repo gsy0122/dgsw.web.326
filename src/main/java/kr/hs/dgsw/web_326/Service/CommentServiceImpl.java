@@ -21,10 +21,14 @@ public class CommentServiceImpl implements CommentService {
     private UserRepository userRepository;
     @PostConstruct
     private void init() {
-        User u = userRepository.save(new User("aaa", "aaa@dgsw", "1234"));
-        commentRepository.save(new Comment(u.getId(), "hi there 1"));
-        commentRepository.save(new Comment(u.getId(), "hi there 2"));
-        commentRepository.save(new Comment(u.getId(), "hi there 3"));
+        User u = userRepository.save(new User("aaa", "aaa@dgsw", "1234",
+                "E:/Source/IdeaProjects/web_326/upload/2019/04/10/c21d69b2-2074-4f32-acab-958320a2bac1_person.png", "person.png"));
+        commentRepository.save(new Comment(u.getId(), "hi there 1",
+                "E:/Source/IdeaProjects/web_326/upload/2019/04/10/f68402fe-2527-4a38-afbc-b297b18c2502_content.png", "content.png"));
+        commentRepository.save(new Comment(u.getId(), "hi there 2",
+                "E:/Source/IdeaProjects/web_326/upload/2019/04/10/f68402fe-2527-4a38-afbc-b297b18c2502_content.png", "content.png"));
+        commentRepository.save(new Comment(u.getId(), "hi there 3",
+                "E:/Source/IdeaProjects/web_326/upload/2019/04/10/f68402fe-2527-4a38-afbc-b297b18c2502_content.png", "content.png"));
     }
 
     @Override
@@ -55,6 +59,8 @@ public class CommentServiceImpl implements CommentService {
             return commentRepository.findById(id)
                     .map(found -> {
                         found.setContent(Optional.ofNullable(comment.getContent()).orElse(found.getContent()));
+                        found.setStoredPath(Optional.ofNullable(comment.getStoredPath()).orElse(found.getStoredPath()));
+                        found.setOriginalName(Optional.ofNullable(comment.getOriginalName()).orElse(found.getOriginalName()));
                         commentRepository.save(found);
                         return new CommentUsernameProtocol(found, user.get().getUsername());
                     })
